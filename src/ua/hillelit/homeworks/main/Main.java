@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
         ValueCalculator vc = new ValueCalculator(ValueCalculator.doCalc(arrayCreator()));
         Thread thread1 = new Thread(new Runnable() {
             @Override
@@ -21,15 +20,12 @@ public class Main {
                 vc.setSecondHalf(vc.changeArray(vc.getSecondHalf()));
             }
         });
+        long start = System.currentTimeMillis();
+        thread1.start();
+        thread2.start();
         try{
-            thread1.start();
-            thread1.join();
-        } catch (InterruptedException e) {
-            System.out.println("InterruptedException main!");
-        }
-        try{
-            thread2.start();
             thread2.join();
+            thread1.join();
         } catch (InterruptedException e) {
             System.out.println("InterruptedException main!");
         }
